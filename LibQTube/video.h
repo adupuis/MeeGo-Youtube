@@ -5,7 +5,7 @@
 
 #include "category.h"
 
-class Video : public QObject {
+class Video : public Retrievable {
 private:
     Category    category;
     QString     name;

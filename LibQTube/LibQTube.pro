@@ -18,7 +18,8 @@ SOURCES += qtube.cpp
 HEADERS += qtube.h\
         LibQTube_global.h \
     video.h \
-    category.h
+    category.h \
+    retrievable.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -38,5 +39,6 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
 
 
