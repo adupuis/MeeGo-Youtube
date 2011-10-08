@@ -3,14 +3,18 @@
 
 #include <QObject>
 #include <QIODevice>
+#include <QNetworkAccessManager>
+#include <QHash>
 
-class TubeRequester : QObject
+#include <QDebug>
+
+class TubeRequester : public QObject
 {
     Q_OBJECT
 public:
     static const QString BASE_URL;
 
-    TubeRequester(QObject *parent);
+    TubeRequester(QObject *parent = 0);
     virtual ~TubeRequester();
 
     void setNumberOfResult(int _nb);
@@ -20,9 +24,18 @@ public:
 
     void sendRequest();
 signals:
-    void resultReady(const QIODevice &_result);
+    /**
+      * @return: may be null if error.
+      */
+    void resultReady(QIODevice *_result);
 
 private:
+    QNetworkAccessManager   m_networkManager;
+    QString                 m_request;
+    QNetworkReply*          m_pReply;
+    QHash<QString,QString>  m_requestHash;
+private slots:
+    void _prepareRequest(QNetworkReply* _reply);
 
 };
 
