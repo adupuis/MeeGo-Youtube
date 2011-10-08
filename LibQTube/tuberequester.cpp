@@ -44,12 +44,12 @@ void TubeRequester::sendRequest()
         m_request.append(key);
         m_request.append("=");
         m_request.append(m_requestHash.value(key));
+        m_request.append("&");
     }
 
     request.setUrl(QUrl(m_request));
     qDebug() << "req" << m_request;
-    bool b = connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
+    connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(_prepareRequest(QNetworkReply*)));
-    qDebug() << "connect" << b;
     m_networkManager.get(request);
 }
