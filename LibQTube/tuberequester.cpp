@@ -13,7 +13,7 @@ TubeRequester::TubeRequester(QObject *parent)
     , m_requestHash    ()
 
 {
-
+    m_requestHash.insert("alt", "rss");
 }
 
 TubeRequester::~TubeRequester()
