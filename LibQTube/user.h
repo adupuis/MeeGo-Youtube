@@ -12,6 +12,8 @@ public:
     // Constructor
     User(QString &name);
 
+    QString& getName();
+
     void retrieve();
 };
 

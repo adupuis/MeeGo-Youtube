@@ -15,7 +15,9 @@ DEFINES += LIBQTUBE_LIBRARY
 
 SOURCES += qtube.cpp \
     tuberequester.cpp \
-    category.cpp
+    category.cpp \
+    user.cpp \
+    video.cpp
 
 HEADERS += qtube.h\
         LibQTube_global.h \
@@ -43,5 +45,7 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
 
 

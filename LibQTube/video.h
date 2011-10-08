@@ -8,8 +8,8 @@
 
 class Video : public Retrievable {
 private:
-    Category    m_category;
-    User        m_author;
+    Category*   m_category;
+    User*       m_author;
 
     QString     m_name;
     QString     m_id;             // Only the string after http://www.youtube.com/watch?v=

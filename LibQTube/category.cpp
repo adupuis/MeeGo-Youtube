@@ -1,6 +1,7 @@
 #include "category.h"
 
 Category::Category(QString &name) {
+
     m_name = name;
 }
 
