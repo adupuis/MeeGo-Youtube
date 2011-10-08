@@ -8,24 +8,56 @@
 class Video : public Retrievable {
 private:
     Category    category;
+    User        author;
+
     QString     name;
     QString     id;             // Only the string after http://www.youtube.com/watch?v=
     QDate       pubDate;
+    QString     description;
+    qint32      duration        = 0;
+
+    qint32      favoriteCount   = 0;
+    qint32      viewCount       = 0;
+    qint32      dislikes        = 0;
+    qint32      likes           = 0;
+    qreal       rating          = 0;
+    qint32      numRating       = 0;
 
 public:
     // Constructor
                 Video       (QString &id);
+                Video       (QString &id, Category *category, User *author);
 
     // Getters
-    Category    getCategory();
+    Category*   getCategory();
+    User*       getAuthor();
     QString&    getName();
     QString&    getId();
     QDate&      getPubDate();
+    QString&    getDescription();
+    qint32      getDuration();
+    qint32      getFavoriteCount();
+    qint32      getViewCount();
+    qint32      getDislikes();
+    qint32      getLikes();
+    qreal       getRating();
+    qint32      getNumRating();
 
     // Setters
-    void        setCategory (Category *Category);
-    void        setName     (QString &name);
-    void        setPubDate  (QDate &date);
+    void        setCategory     (Category *category);
+    void        setAuthor       (User *author);
+    void        setName         (QString &name);
+    void        setPubDate      (QDate &date);
+    void        setDescription  (QString &description);
+    void        setDuration     (qint32 duration);
+    void        setFavoriteCount(qint32 count);
+    void        setViewCount    (qint32 count);
+    void        setDislikes     (qint32 count);
+    void        setLikes        (qint32 count);
+    void        setRating       (qreal rating);
+    void        setNumRating    (qint32 count);
+
+    void        retrieve();
 };
 
 #endif // VIDEO_H

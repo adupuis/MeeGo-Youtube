@@ -13,6 +13,8 @@ public:
 
     // Getters
     QString&    getName();
+
+    void        retrieve();
 };
 
 #endif // CATEGORY_H
