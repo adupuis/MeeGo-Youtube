@@ -46,6 +46,11 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     qreal rating = 0.0f;
     qint32 duration = 0;
     QString uploadedDate;
+    QString description;
+    qint32 favoriteCount = 0;
+    qint32 viewCount = 0;
+    Category *category = NULL;
+
     title = getSubElementText(pElement, "title");
     author = getSubElementText(pElement, "author");
     QDomNodeList mediaGroupElems = pElement.elementsByTagName("group");
@@ -53,6 +58,9 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         QDomElement mediaGroupElem = mediaGroupElems.at(0).toElement();
         videoId = getSubElementText(mediaGroupElem, "videoid");
         uploadedDate = getSubElementText(mediaGroupElem, "uploaded");
+        description = getSubElementText(mediaGroupElem, "description");
+        QString categoryString = getSubElementText(mediaGroupElem, "category");
+        category = new Category(categoryString);
 
         QDomNodeList durationElems = mediaGroupElem.elementsByTagName("duration");
         if(!durationElems.isEmpty()) {
@@ -60,6 +68,7 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
             QString durationString = durationElem.attribute("seconds");
             duration = durationString.toInt();
         }
+
     }
     QDomNodeList ratingElems = pElement.elementsByTagName("rating");
     if(!ratingElems.isEmpty()) {
@@ -68,13 +77,26 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         rating = (qreal) ratingString.toFloat();
 
     }
+    QDomNodeList statisticsElems = pElement.elementsByTagName("statistics");
+    if(!statisticsElems.isEmpty()) {
+        QDomElement statisticsElem = statisticsElems.at(0).toElement();
+        QString favoriteCountStr = statisticsElem.attribute("favoriteCount");
+        favoriteCount = favoriteCountStr.toInt();
+        QString viewCountStr = statisticsElem.attribute("viewCount");
+        viewCount = viewCountStr.toInt();
+    }
     Video * result = new Video(videoId);
     User *user = new User(author);
     result->setAuthor(user);
     result->setName(title);
+    result->setDescription(description);
+    result->setCategory(category);
     result->setDuration(duration);
     result->setRating(rating);
     result->setPubDate(uploadedDate);
+    result->setFavoriteCount(favoriteCount);
+    result->setViewCount(viewCount);
+
     return result;
 }
 
