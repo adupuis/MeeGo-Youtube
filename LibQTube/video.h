@@ -6,7 +6,13 @@
 #include "user.h"
 #include "category.h"
 
-class Video : public Retrievable {
+class Video : public QObject {
+private:
+    static const QString    BASE_THUMBNAIL_URL;
+    static const QString    THUMBNAIL_FILE;
+    static const QString    HQ_THUMBNAIL_FILE;
+    static const QString    BASE_BROWSER_URL;
+
 private:
     Category*   m_category;
     User*       m_author;
@@ -59,7 +65,10 @@ public:
     void        setRating       (qreal rating);
     void        setNumRating    (qint32 count);
 
-    void        retrieve();
+    // URL generated from id
+    QString     getThumbnailUrl();
+    QString     getHqThumbnailUrl();
+    QString     getBrowserUrl();
 };
 
 #endif // VIDEO_H
