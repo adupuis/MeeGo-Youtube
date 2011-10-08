@@ -97,6 +97,7 @@ void TubeRequester::sendRequest()
     }
 
     request.setUrl(QUrl(m_request));
+    request.setRawHeader("GData-Version", "2");
     qDebug() << "req" << request.url();
     connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(_prepareRequest(QNetworkReply*)));
