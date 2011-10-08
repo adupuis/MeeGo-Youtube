@@ -8,7 +8,3 @@ Category::Category(QString &name) {
 QString& Category::getName() {
     return m_name;
 }
-
-void Category::retrieve() {
-    // TODO
-}

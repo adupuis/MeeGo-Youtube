@@ -6,7 +6,7 @@
 #include "user.h"
 #include "category.h"
 
-class Video : public Retrievable {
+class Video : public QObject {
 private:
     static const QString    s_baseThumbnailUrl;
     static const QString    s_thumbnailFile;
@@ -69,8 +69,6 @@ public:
     QString     getThumbnailUrl();
     QString     getHqThumbnailUrl();
     QString     getBrowserUrl();
-
-    void        retrieve();
 };
 
 #endif // VIDEO_H

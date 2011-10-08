@@ -1,7 +1,7 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
-#include "retrievable.h"
+#include <QObject>
 
 class Category : public QObject
 {
@@ -13,8 +13,6 @@ public:
 
     // Getters
     QString&    getName();
-
-    void        retrieve();
 };
 
 #endif // CATEGORY_H
