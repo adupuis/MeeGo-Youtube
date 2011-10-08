@@ -14,8 +14,8 @@ TEMPLATE = lib
 DEFINES += LIBQTUBE_LIBRARY
 
 SOURCES += qtube.cpp \
-    qtubeparser.cpp
-    qtube.h\
+    qtubeparser.cpp \
+    qtube.h \
     LibQTube_global.h \
     tuberequester.cpp \
     category.cpp \
