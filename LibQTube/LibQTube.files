@@ -1,0 +1,6 @@
+LibQTube.pro
+LibQTube/LibQTube_global.h
+qtube.cpp
+qtube.h
+qtubeparser.h
+qtubeparser.cpp
