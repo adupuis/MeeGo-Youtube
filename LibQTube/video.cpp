@@ -28,7 +28,7 @@ QString& Video::getId() {
     return m_id;
 }
 
-QDate& Video::getPubDate() {
+QDateTime& Video::getPubDate() {
     return m_pubDate;
 }
 
@@ -76,7 +76,7 @@ void Video::setName(QString &name) {
     m_name = name;
 }
 
-void Video::setPubDate(QDate &date) {
+void Video::setPubDate(QDateTime &date) {
     m_pubDate = date;
 }
 
