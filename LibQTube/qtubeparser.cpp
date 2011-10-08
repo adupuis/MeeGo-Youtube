@@ -7,15 +7,15 @@ using namespace std;
 QTubeParser::QTubeParser()
 {
 }
-void QTubeParser::parseFeed(QIODevice &pIoDevice) {
-    cout << "parseFeed... " <<endl;
+QList<Video*> QTubeParser::parseFeed(QIODevice &pIoDevice) {
+    QList<Video*> result;
     QDomDocument doc;
     QString error;
     int errorLine;
     int errorColumn;
     if(!doc.setContent(&pIoDevice, true, &error, &errorLine, &errorColumn)) {
         cout << "!bad content at "<< errorLine << ":" << errorColumn << ": " << (error.toAscii().data()) <<endl;
-        return;
+        return result;
     }
     QDomElement docElem = doc.documentElement();
     QDomNodeList itemElems = docElem.elementsByTagName("item");
@@ -23,7 +23,9 @@ void QTubeParser::parseFeed(QIODevice &pIoDevice) {
 
         QDomElement itemElem = itemElems.at(i).toElement();
         Video *video = parseVideo(itemElem);
+        result.append(video);
     }
+    return result;
 }
 
 QString QTubeParser::getSubElementText(QDomElement pElement, QString pSubElementName) {
@@ -66,17 +68,6 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         rating = (qreal) ratingString.toFloat();
 
     }
-    if(title != NULL)
-        cout << "video title: " << (title.toAscii().data()) << endl;
-
-    if(author != NULL)
-        cout << "  author: " << author.toAscii().data() << endl;
-
-    if(videoId != NULL)
-        cout << "  video id: " << videoId.toAscii().data() << endl;
-
-    cout << "  rating: " << rating <<endl;
-    cout << "  duration: " << duration << endl;
     Video * result = new Video(videoId);
     User *user = new User(author);
     result->setAuthor(user);

@@ -2,13 +2,14 @@
 #define QTUBEPARSER_H
 
 #include <QDomDocument>
+#include <QList>
 #include "video.h"
 
 class QTubeParser
 {
 public:
     QTubeParser();
-    void parseFeed(QIODevice &);
+    QList<Video*> parseFeed(QIODevice &);
 private:
     QString getSubElementText(QDomElement pElement, QString pSubElementName);
     Video* parseVideo(QDomElement pElement);
