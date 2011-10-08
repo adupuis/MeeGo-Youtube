@@ -13,10 +13,12 @@ TEMPLATE = lib
 
 DEFINES += LIBQTUBE_LIBRARY
 
-SOURCES += qtube.cpp
+SOURCES += qtube.cpp \
+    tuberequester.cpp
 
 HEADERS += qtube.h\
-        LibQTube_global.h
+        LibQTube_global.h \
+    tuberequester.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -36,3 +38,5 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
