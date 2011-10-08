@@ -7,18 +7,22 @@ using namespace std;
 QTubeParser::QTubeParser()
 {
 }
+
 QList<Video*> QTubeParser::parseFeed(QIODevice &pIoDevice) {
     QList<Video*> result;
     QDomDocument doc;
+
     QString error;
     int errorLine;
     int errorColumn;
+    // Read the XML file and check for errors.
     if(!doc.setContent(&pIoDevice, true, &error, &errorLine, &errorColumn)) {
         cout << "!bad content at "<< errorLine << ":" << errorColumn << ": " << (error.toAscii().data()) <<endl;
         return result;
     }
     QDomElement docElem = doc.documentElement();
 
+    // Iterate through all the item elements (each item element = one video).
     QDomNodeList itemElems = docElem.elementsByTagName("item");
     for(int i=0; i < itemElems.count(); i++) {
 
@@ -29,18 +33,26 @@ QList<Video*> QTubeParser::parseFeed(QIODevice &pIoDevice) {
     return result;
 }
 
+/**
+ * XML utility method: Return the content (CDATA) of the first child
+ * element with the given tag name.
+ */
 QString QTubeParser::getSubElementText(QDomElement pElement, QString pSubElementName) {
     QDomNodeList subElems = pElement.elementsByTagName(pSubElementName);
-    for(int i=0; i < subElems.count(); i++) {
-        QDomElement subElem = subElems.at(i).toElement();
-        QString text = subElem.text();
-        return text;
+    // If no child elem exists with the given tag, just return an empty string
+    if(subElems.isEmpty()) {
+        return "";
     }
-    QString empty("");
-    return empty;
+    QDomElement subElem = subElems.at(0).toElement();
+    QString text = subElem.text();
+    return text;
 }
 
+/**
+ * Parse the XML element for a given video and create a Video object for the video.
+ */
 Video *QTubeParser::parseVideo(QDomElement pElement) {
+    // Video attributes
     QString author;
     QString title;
     QString videoId;
@@ -54,17 +66,33 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     qint32 numDislikes = 0;
     Category *category = NULL;
 
+    // Video attributes in the top element for this video.
     title = getSubElementText(pElement, "title");
     author = getSubElementText(pElement, "author");
+
+    // Look for video attributes in the media:group element.
     QDomNodeList mediaGroupElems = pElement.elementsByTagName("group");
     if(!mediaGroupElems.isEmpty()) {
+        // Assume there's only one media:group element for the video.
         QDomElement mediaGroupElem = mediaGroupElems.at(0).toElement();
+
+        // Get the media:group level attributes.
+        // Example:
+        // <media:category label='Music'>Music</media:category>
+        // <media:description type='plain'>My cool video</media:description>
+        // <yt:uploaded>2011-10-06T23:13:59.000Z</yt:uploaded>
+        // <yt:videoid>lbvzkdYqJDc</yt:videoid>
+
         videoId = getSubElementText(mediaGroupElem, "videoid");
         uploadedDate = getSubElementText(mediaGroupElem, "uploaded");
         description = getSubElementText(mediaGroupElem, "description");
+
+        // TODO we should have a separate class manage the list of possible
+        // categories, instead of allocating a new Category object for each user.
         QString categoryString = getSubElementText(mediaGroupElem, "category");
         category = new Category(categoryString);
 
+        // Duration of the video. Ex: <yt:duration seconds="211"/>
         QDomNodeList durationElems = mediaGroupElem.elementsByTagName("duration");
         if(!durationElems.isEmpty()) {
             QDomElement durationElem = durationElems.at(0).toElement();
@@ -73,13 +101,18 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         }
 
     }
+    // There are two rating elements for 1-5 ratings, and for like/dislike ratings.
     QDomNodeList ratingElems = pElement.elementsByTagName("rating");
     for(int i=0; i < ratingElems.count(); i++) {
         QDomElement ratingElem = ratingElems.at(i).toElement();
+        // Example:
+        // <gd:rating average='4.8575497' max='5' min='1' numRaters='2808'/>
         if(ratingElem.prefix() == "gd") {
             QString ratingString = ratingElem.attribute("average", "0.0");
             rating = (qreal) ratingString.toFloat();
         }
+        // Example:
+        // <yt:rating numDislikes='100' numLikes='2708'/>
         else if(ratingElem.prefix() == "yt") {
             QString numLikesString = ratingElem.attribute("numLikes", "0");
             numLikes = numLikesString.toInt();
@@ -87,6 +120,9 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
             numDislikes = numDislikesString.toInt();
         }
     }
+
+    // Get view statistics. Example:
+    // <yt:statistics favoriteCount='1888' viewCount='216149'/>
     QDomNodeList statisticsElems = pElement.elementsByTagName("statistics");
     if(!statisticsElems.isEmpty()) {
         QDomElement statisticsElem = statisticsElems.at(0).toElement();
@@ -95,7 +131,13 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         QString viewCountStr = statisticsElem.attribute("viewCount");
         viewCount = viewCountStr.toInt();
     }
-    Video * result = new Video(videoId);
+
+    // Now create the video and set the attributes.
+    Video *result = new Video(videoId);
+
+    // TODO we probably shouldn't create a new user here, but have some
+    // separate class which handles the users.  Otherwise we may allocate
+    // a User object multiple times for the same user.
     User *user = new User(author);
     result->setAuthor(user);
     result->setName(title);
@@ -108,7 +150,5 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     result->setViewCount(viewCount);
     result->setLikes(numLikes);
     result->setDislikes(numDislikes);
-
     return result;
 }
-
