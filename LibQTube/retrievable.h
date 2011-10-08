@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+/*
+ * This interface is used fo objects which have a "get" API
+ *   User, Playlist, Playlist entry
+ */
 class Retrievable : public QObject
 {
 public:

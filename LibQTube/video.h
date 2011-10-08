@@ -8,10 +8,10 @@
 
 class Video : public QObject {
 private:
-    static const QString    s_baseThumbnailUrl;
-    static const QString    s_thumbnailFile;
-    static const QString    s_hqThumbnailFile;
-    static const QString    s_baseBrowserUrl;
+    static const QString    BASE_THUMBNAIL_URL;
+    static const QString    THUMBNAIL_FILE;
+    static const QString    HQ_THUMBNAIL_FILE;
+    static const QString    BASE_BROWSER_URL;
 
 private:
     Category*   m_category;

@@ -1,9 +1,9 @@
 #include "video.h"
 
-const QString Video::s_baseThumbnailUrl = QString("http://i.ytimg.com/vi/");
-const QString Video::s_thumbnailFile = QString("/default.jpg");
-const QString Video::s_hqThumbnailFile = QString("/hqdefault.jpg");
-const QString Video::s_baseBrowserUrl = QString("http://www.youtube.com/watch?v=");
+const QString Video::BASE_THUMBNAIL_URL = QString("http://i.ytimg.com/vi/");
+const QString Video::THUMBNAIL_FILE = QString("/default.jpg");
+const QString Video::HQ_THUMBNAIL_FILE = QString("/hqdefault.jpg");
+const QString Video::BASE_BROWSER_URL = QString("http://www.youtube.com/watch?v=");
 
 Video::Video(QString &id) {
     m_id = id;
@@ -122,16 +122,16 @@ void Video::setNumRating(qint32 count) {
 }
 
 QString Video::getThumbnailUrl() {
-    QString url = QString(s_baseThumbnailUrl);
+    QString url = QString(BASE_THUMBNAIL_URL);
     url.append(m_id);
-    url.append(s_thumbnailFile);
+    url.append(THUMBNAIL_FILE);
     return url;
 }
 
 QString Video::getHqThumbnailUrl() {
-    return s_baseThumbnailUrl + m_id + s_hqThumbnailFile;
+    return BASE_THUMBNAIL_URL + m_id + HQ_THUMBNAIL_FILE;
 }
 
 QString Video::getBrowserUrl() {
-    return s_baseBrowserUrl + m_id;
+    return BASE_BROWSER_URL + m_id;
 }
