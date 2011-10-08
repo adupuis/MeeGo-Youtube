@@ -33,3 +33,15 @@ QList<Category*> Category::getPredefinedCategories() {
 
     return s_predefinedCategories;
 }
+
+Category* Category::getPredefinedCategory(QString &name) {
+    QList<Category*> categories = Category::getPredefinedCategories();
+    QListIterator<Category*> i(categories);
+    while (i.hasNext()) {
+        Category* c = i.next();
+        if (c->getName().compare(name) == 0) {
+            return c;
+        }
+    }
+    return NULL;
+}

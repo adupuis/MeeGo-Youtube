@@ -21,6 +21,7 @@ public:
     void        request();
 
     static QList<Category*> getPredefinedCategories();
+    static Category*        getPredefinedCategory(QString& name);
 };
 
 #endif // CATEGORY_H

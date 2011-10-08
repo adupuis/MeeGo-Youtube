@@ -18,10 +18,6 @@ Video::Video(QString &id, Category *category, User *author) {
 }
 
 Video::~Video() {
-    if (m_category != NULL) {
-        delete m_category;
-    }
-
     if (m_author != NULL) {
         delete m_author;
     }
