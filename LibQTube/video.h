@@ -5,8 +5,15 @@
 
 #include "user.h"
 #include "category.h"
+#include "keyword.h"
 
-class Video : public Retrievable {
+class Video : public QObject {
+private:
+    static const QString    BASE_THUMBNAIL_URL;
+    static const QString    THUMBNAIL_FILE;
+    static const QString    HQ_THUMBNAIL_FILE;
+    static const QString    BASE_BROWSER_URL;
+
 private:
     Category*   m_category;
     User*       m_author;
@@ -24,10 +31,13 @@ private:
     qreal       m_rating;
     qint32      m_numRating;
 
+    QList<Keyword*>  m_keywords;
+
 public:
     // Constructor
                 Video       (QString &id);
                 Video       (QString &id, Category *category, User *author);
+                ~Video();
 
     // Getters
     Category*   getCategory();
@@ -44,6 +54,8 @@ public:
     qreal       getRating();
     qint32      getNumRating();
 
+    QList<Keyword*>    getKeywords();
+
     // Setters
     void        setCategory     (Category *category);
     void        setAuthor       (User *author);
@@ -59,7 +71,12 @@ public:
     void        setRating       (qreal rating);
     void        setNumRating    (qint32 count);
 
-    void        retrieve();
+    void        addKeyword      (Keyword* keyword);
+
+    // URL generated from id
+    QString     getThumbnailUrl();
+    QString     getHqThumbnailUrl();
+    QString     getBrowserUrl();
 };
 
 #endif // VIDEO_H

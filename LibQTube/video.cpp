@@ -1,15 +1,36 @@
 #include "video.h"
 
+const QString Video::BASE_THUMBNAIL_URL = QString("http://i.ytimg.com/vi/");
+const QString Video::THUMBNAIL_FILE = QString("/default.jpg");
+const QString Video::HQ_THUMBNAIL_FILE = QString("/hqdefault.jpg");
+const QString Video::BASE_BROWSER_URL = QString("http://www.youtube.com/watch?v=");
+
 Video::Video(QString &id) {
     m_id = id;
+    m_keywords = QList<Keyword*>();
 }
 
 Video::Video(QString &id, Category *category, User *author) {
     m_id = id;
     m_category = category;
     m_author = author;
+    m_keywords = QList<Keyword*>();
+}
 
-    setParent(category);
+Video::~Video() {
+    if (m_category != NULL) {
+        delete m_category;
+    }
+
+    if (m_author != NULL) {
+        delete m_author;
+    }
+
+    QListIterator<Keyword*> i(m_keywords);
+    while (i.hasNext()) {
+        Keyword* k = i.next();
+        delete k;
+    }
 }
 
 Category* Video::getCategory() {
@@ -64,6 +85,10 @@ qint32 Video::getNumRating() {
     return m_numRating;
 }
 
+QList<Keyword*> Video::getKeywords() {
+    return m_keywords;
+}
+
 void Video::setCategory(Category *category) {
     m_category = category;
 }
@@ -116,6 +141,21 @@ void Video::setNumRating(qint32 count) {
     m_numRating = count;
 }
 
-void Video::retrieve() {
-    // TODO
+void Video::addKeyword(Keyword *keyword) {
+    m_keywords.append(keyword);
+}
+
+QString Video::getThumbnailUrl() {
+    QString url = QString(BASE_THUMBNAIL_URL);
+    url.append(m_id);
+    url.append(THUMBNAIL_FILE);
+    return url;
+}
+
+QString Video::getHqThumbnailUrl() {
+    return BASE_THUMBNAIL_URL + m_id + HQ_THUMBNAIL_FILE;
+}
+
+QString Video::getBrowserUrl() {
+    return BASE_BROWSER_URL + m_id;
 }

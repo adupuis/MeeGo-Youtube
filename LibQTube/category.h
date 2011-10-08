@@ -1,20 +1,24 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
-#include "retrievable.h"
+#include <QObject>
 
 class Category : public QObject
 {
 private:
-    QString m_name;
+    static QList<Category*>   s_predefinedCategories;
+
+    QString     m_name;
 public:
     // Constructor
-                Category(QString &name);
+                Category(QString name);
 
     // Getters
     QString&    getName();
 
-    void        retrieve();
+    void        requestVideos();
+
+    static QList<Category*> getPredefinedCategories();
 };
 
 #endif // CATEGORY_H

@@ -1,41 +1,22 @@
 #ifndef TUBEREQUESTER_H
 #define TUBEREQUESTER_H
 
+#include <tuberequesterbase.h>
 #include <QObject>
-#include <QIODevice>
-#include <QNetworkAccessManager>
-#include <QHash>
+#include <QString>
 
-#include <QDebug>
-
-class TubeRequester : public QObject
+class TubeRequester : public TubeRequesterBase
 {
-    Q_OBJECT
 public:
-    static const QString BASE_URL;
-
     TubeRequester(QObject *parent = 0);
-    virtual ~TubeRequester();
+    ~TubeRequester();
 
-    void setNumberOfResult(int _nb);
     void setQuery(const QString& _request);
+    void addCategory(Category _cat);
+    void setFormatEmbeddable();
+    void setNumberOfResult(int _nb);
 
-    // TODO add query params
-
-    void sendRequest();
-signals:
-    /**
-      * @return: may be null if error.
-      */
-    void resultReady(QIODevice *_result);
-
-private:
-    QNetworkAccessManager   m_networkManager;
-    QString                 m_request;
-    QNetworkReply*          m_pReply;
-    QHash<QString,QString>  m_requestHash;
-private slots:
-    void _prepareRequest(QNetworkReply* _reply);
+private :
 
 };
 
