@@ -15,6 +15,7 @@ TubeRequester::TubeRequester(QObject *parent)
     , m_requestHash   ()
 
 {
+    m_requestHash.insert("alt", "rss");
     //FIXME: hard coded...
     // see Categories enum
     CATEGORIES.append(QString("Autos"));
@@ -30,7 +31,6 @@ TubeRequester::TubeRequester(QObject *parent)
     CATEGORIES.append(QString("Tech"));
     CATEGORIES.append(QString("Sports"));
     CATEGORIES.append(QString("Travel"));
-
 }
 
 TubeRequester::~TubeRequester()
@@ -66,8 +66,9 @@ void TubeRequester::_prepareRequest(QNetworkReply* _reply)
 void TubeRequester::sendRequest()
 {
     QNetworkRequest request;
-    m_request = BASE_URL;
+    bool isFirst = true;
 
+    m_request = BASE_URL;
 
     // categories
     if( m_categories.size() != 0 ) {
@@ -84,6 +85,8 @@ void TubeRequester::sendRequest()
     {// param
         int count = 0;
         const QList<QString> &keys = m_requestHash.keys();
+        if(keys.isEmpty() == false)
+            isFirst = false;
         foreach( QString key, keys ) {
             if(count == 0)
                 m_request.append("?");
@@ -96,7 +99,18 @@ void TubeRequester::sendRequest()
         }
     }
 
+    { // format
+        if(m_isEmbeddable) {
+            if(isFirst)
+                m_request.append("?");
+            else
+                m_request.append("&");
+            m_request.append("format=5");
+        }
+    }
+
     request.setUrl(QUrl(m_request));
+    request.setRawHeader("GData-Version", "2");
     qDebug() << "req" << request.url();
     connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(_prepareRequest(QNetworkReply*)));
