@@ -80,6 +80,10 @@ void Video::setPubDate(QDateTime &date) {
     m_pubDate = date;
 }
 
+void Video::setPubDate(QString &date) {
+    m_pubDate = QDateTime::fromString(date, Qt::ISODate);
+}
+
 void Video::setDescription(QString &description) {
     m_description = description;
 }

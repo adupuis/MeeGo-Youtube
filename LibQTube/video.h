@@ -49,6 +49,7 @@ public:
     void        setAuthor       (User *author);
     void        setName         (QString &name);
     void        setPubDate      (QDateTime &date);
+    void        setPubDate      (QString &date);
     void        setDescription  (QString &description);
     void        setDuration     (qint32 duration);
     void        setFavoriteCount(qint32 count);
