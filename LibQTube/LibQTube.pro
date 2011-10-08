@@ -35,7 +35,8 @@ HEADERS += qtube.h\
     keyword.h \
     tuberequesterbase.h \
     tuberequester.h \
-    tuberequesterrelated.h
+    tuberequesterrelated.h \
+    requestable.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -55,3 +56,4 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+

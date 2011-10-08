@@ -6,8 +6,9 @@
 #include "user.h"
 #include "category.h"
 #include "keyword.h"
+#include "requestable.h"
 
-class Video : public QObject {
+class Video : public Requestable {
 private:
     static const QString    BASE_THUMBNAIL_URL;
     static const QString    THUMBNAIL_FILE;
@@ -77,6 +78,10 @@ public:
     QString     getThumbnailUrl();
     QString     getHqThumbnailUrl();
     QString     getBrowserUrl();
+
+    void        request();
+    void        requestRelated();   // request alias
+    void        requestResponses();
 };
 
 #endif // VIDEO_H

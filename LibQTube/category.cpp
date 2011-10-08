@@ -10,7 +10,7 @@ QString& Category::getName() {
     return m_name;
 }
 
-void Category::requestVideos() {
+void Category::request() {
     // TODO with TubeRequester
 }
 

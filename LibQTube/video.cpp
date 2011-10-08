@@ -159,3 +159,15 @@ QString Video::getHqThumbnailUrl() {
 QString Video::getBrowserUrl() {
     return BASE_BROWSER_URL + m_id;
 }
+
+void Video::request() {
+    // TODO
+}
+
+void Video::requestRelated() {
+    request();
+}
+
+void Video::requestResponses() {
+    // TODO
+}

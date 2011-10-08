@@ -11,3 +11,7 @@ QString& User::getName() {
 void User::retrieve() {
     // TODO
 }
+
+void User::request() {
+    // TODO
+}

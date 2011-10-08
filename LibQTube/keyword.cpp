@@ -7,3 +7,7 @@ Keyword::Keyword(const QString& name) {
 QString& Keyword::getName() {
     return m_name;
 }
+
+void Keyword::request() {
+    // TODO
+}
