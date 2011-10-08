@@ -16,7 +16,9 @@ DEFINES += LIBQTUBE_LIBRARY
 SOURCES += qtube.cpp
 
 HEADERS += qtube.h\
-        LibQTube_global.h
+        LibQTube_global.h \
+    video.h \
+    category.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -36,3 +38,5 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
