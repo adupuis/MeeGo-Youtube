@@ -5,6 +5,7 @@
 
 #include "user.h"
 #include "category.h"
+#include "keyword.h"
 
 class Video : public QObject {
 private:
@@ -30,10 +31,13 @@ private:
     qreal       m_rating;
     qint32      m_numRating;
 
+    QList<Keyword*>  m_keywords;
+
 public:
     // Constructor
                 Video       (QString &id);
                 Video       (QString &id, Category *category, User *author);
+                ~Video();
 
     // Getters
     Category*   getCategory();
@@ -50,6 +54,8 @@ public:
     qreal       getRating();
     qint32      getNumRating();
 
+    QList<Keyword*>    getKeywords();
+
     // Setters
     void        setCategory     (Category *category);
     void        setAuthor       (User *author);
@@ -64,6 +70,8 @@ public:
     void        setLikes        (qint32 count);
     void        setRating       (qreal rating);
     void        setNumRating    (qint32 count);
+
+    void        addKeyword      (Keyword* keyword);
 
     // URL generated from id
     QString     getThumbnailUrl();
