@@ -15,10 +15,21 @@ DEFINES += LIBQTUBE_LIBRARY
 
 SOURCES += qtube.cpp \
     qtubeparser.cpp
+    qtube.h\
+    LibQTube_global.h \
+    tuberequester.cpp \
+    category.cpp \
+    user.cpp \
+    video.cpp
 
 HEADERS += qtube.h\
         LibQTube_global.h \
-    qtubeparser.h
+    video.h \
+    category.h \
+    retrievable.h \
+    tuberequester.h \
+    qtubeparser.h \
+    user.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -38,9 +49,5 @@ unix:!symbian {
     }
     INSTALLS += target
 }
-
-
-
-
 
 
