@@ -91,7 +91,7 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         // TODO we should have a separate class manage the list of possible
         // categories, instead of allocating a new Category object for each user.
         QString categoryString = getSubElementText(mediaGroupElem, "category");
-        category = new Category(categoryString);
+        category = Category::getPredefinedCategory(categoryString);
 
         // Duration of the video. Ex: <yt:duration seconds="211"/>
         QDomNodeList durationElems = mediaGroupElem.elementsByTagName("duration");
