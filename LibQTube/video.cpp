@@ -1,5 +1,10 @@
 #include "video.h"
 
+const QString Video::s_baseThumbnailUrl = QString("http://i.ytimg.com/vi/");
+const QString Video::s_thumbnailFile = QString("/default.jpg");
+const QString Video::s_hqThumbnailFile = QString("/hqdefault.jpg");
+const QString Video::s_baseBrowserUrl = QString("http://www.youtube.com/watch?v=");
+
 Video::Video(QString &id) {
     m_id = id;
 }
@@ -114,6 +119,21 @@ void Video::setRating(qreal rating) {
 
 void Video::setNumRating(qint32 count) {
     m_numRating = count;
+}
+
+QString Video::getThumbnailUrl() {
+    QString url = QString(s_baseThumbnailUrl);
+    url.append(m_id);
+    url.append(s_thumbnailFile);
+    return url;
+}
+
+QString Video::getHqThumbnailUrl() {
+    return s_baseThumbnailUrl + m_id + s_hqThumbnailFile;
+}
+
+QString Video::getBrowserUrl() {
+    return s_baseBrowserUrl + m_id;
 }
 
 void Video::retrieve() {

@@ -8,6 +8,12 @@
 
 class Video : public Retrievable {
 private:
+    static const QString    s_baseThumbnailUrl;
+    static const QString    s_thumbnailFile;
+    static const QString    s_hqThumbnailFile;
+    static const QString    s_baseBrowserUrl;
+
+private:
     Category*   m_category;
     User*       m_author;
 
@@ -58,6 +64,11 @@ public:
     void        setLikes        (qint32 count);
     void        setRating       (qreal rating);
     void        setNumRating    (qint32 count);
+
+    // URL generated from id
+    QString     getThumbnailUrl();
+    QString     getHqThumbnailUrl();
+    QString     getBrowserUrl();
 
     void        retrieve();
 };
