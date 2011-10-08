@@ -18,6 +18,7 @@ QList<Video*> QTubeParser::parseFeed(QIODevice &pIoDevice) {
         return result;
     }
     QDomElement docElem = doc.documentElement();
+
     QDomNodeList itemElems = docElem.elementsByTagName("item");
     for(int i=0; i < itemElems.count(); i++) {
 
@@ -49,6 +50,8 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     QString description;
     qint32 favoriteCount = 0;
     qint32 viewCount = 0;
+    qint32 numLikes = 0;
+    qint32 numDislikes = 0;
     Category *category = NULL;
 
     title = getSubElementText(pElement, "title");
@@ -71,11 +74,18 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
 
     }
     QDomNodeList ratingElems = pElement.elementsByTagName("rating");
-    if(!ratingElems.isEmpty()) {
-        QDomElement ratingElem = ratingElems.at(0).toElement();
-        QString ratingString = ratingElem.attribute("average", "0.0");
-        rating = (qreal) ratingString.toFloat();
-
+    for(int i=0; i < ratingElems.count(); i++) {
+        QDomElement ratingElem = ratingElems.at(i).toElement();
+        if(ratingElem.prefix() == "gd") {
+            QString ratingString = ratingElem.attribute("average", "0.0");
+            rating = (qreal) ratingString.toFloat();
+        }
+        else if(ratingElem.prefix() == "yt") {
+            QString numLikesString = ratingElem.attribute("numLikes", "0");
+            numLikes = numLikesString.toInt();
+            QString numDislikesString = ratingElem.attribute("numDislikes","0");
+            numDislikes = numDislikesString.toInt();
+        }
     }
     QDomNodeList statisticsElems = pElement.elementsByTagName("statistics");
     if(!statisticsElems.isEmpty()) {
@@ -96,6 +106,8 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     result->setPubDate(uploadedDate);
     result->setFavoriteCount(favoriteCount);
     result->setViewCount(viewCount);
+    result->setLikes(numLikes);
+    result->setDislikes(numDislikes);
 
     return result;
 }
