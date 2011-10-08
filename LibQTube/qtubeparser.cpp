@@ -1,5 +1,6 @@
 #include "qtubeparser.h"
 #include <QDateTime>
+#include <QStringList>
 #include <iostream>
 #include "user.h"
 
@@ -65,7 +66,7 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     qint32 numLikes = 0;
     qint32 numDislikes = 0;
     Category *category = NULL;
-
+    QStringList keywordsList;
     // Video attributes in the top element for this video.
     title = getSubElementText(pElement, "title");
     author = getSubElementText(pElement, "author");
@@ -100,6 +101,9 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
             duration = durationString.toInt();
         }
 
+        // Keywords.  Example: <media:keywords>chopin, melancholy, cello</media:keywords>
+        QString keywordsListString = getSubElementText(mediaGroupElem, "keywords");
+        keywordsList = keywordsListString.split(",",QString::SkipEmptyParts);
     }
     // There are two rating elements for 1-5 ratings, and for like/dislike ratings.
     QDomNodeList ratingElems = pElement.elementsByTagName("rating");
@@ -150,5 +154,11 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     result->setViewCount(viewCount);
     result->setLikes(numLikes);
     result->setDislikes(numDislikes);
+
+    for(int i=0; i < keywordsList.count(); i++) {
+        // TODO need new class to manage list of keywords?
+        result->addKeyword(new Keyword(keywordsList.at(i)));
+    }
+
     return result;
 }
