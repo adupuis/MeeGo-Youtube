@@ -9,7 +9,7 @@ private:
     QString m_name;
 
 public:
-    Keyword(QString& name);
+    Keyword(const QString& name);
 
     QString&    getName();
 };

@@ -1,6 +1,6 @@
 #include "keyword.h"
 
-Keyword::Keyword(QString& name) {
+Keyword::Keyword(const QString& name) {
     m_name = name;
 }
 
