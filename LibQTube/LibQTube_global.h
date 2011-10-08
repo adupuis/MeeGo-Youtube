@@ -1,0 +1,12 @@
+#ifndef LIBQTUBE_GLOBAL_H
+#define LIBQTUBE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LIBQTUBE_LIBRARY)
+#  define LIBQTUBESHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LIBQTUBESHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LIBQTUBE_GLOBAL_H
