@@ -1,5 +1,7 @@
 #include "category.h"
 
+QList<Category*>   Category::s_predefinedCategories;
+
 Category::Category(QString name) {
     m_name = name;
 }
