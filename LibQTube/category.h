@@ -6,7 +6,7 @@
 class Category : public QObject
 {
 private:
-    QString name;
+    QString m_name;
 public:
     // Constructor
                 Category(QString &name);

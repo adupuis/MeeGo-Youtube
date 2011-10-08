@@ -8,21 +8,21 @@
 
 class Video : public Retrievable {
 private:
-    Category    category;
-    User        author;
+    Category    m_category;
+    User        m_author;
 
-    QString     name;
-    QString     id;             // Only the string after http://www.youtube.com/watch?v=
-    QDate       pubDate;
-    QString     description;
-    qint32      duration;
+    QString     m_name;
+    QString     m_id;             // Only the string after http://www.youtube.com/watch?v=
+    QDate       m_pubDate;
+    QString     m_description;
+    qint32      m_duration;
 
-    qint32      favoriteCount;
-    qint32      viewCount;
-    qint32      dislikes;
-    qint32      likes;
-    qreal       rating;
-    qint32      numRating;
+    qint32      m_favoriteCount;
+    qint32      m_viewCount;
+    qint32      m_dislikes;
+    qint32      m_likes;
+    qreal       m_rating;
+    qint32      m_numRating;
 
 public:
     // Constructor

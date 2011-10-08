@@ -5,6 +5,9 @@
 
 class User : public Retrievable
 {
+private:
+    QString m_name;
+
 public:
     // Constructor
     User(QString &name);

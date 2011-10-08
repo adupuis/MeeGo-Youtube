@@ -14,7 +14,8 @@ TEMPLATE = lib
 DEFINES += LIBQTUBE_LIBRARY
 
 SOURCES += qtube.cpp \
-    tuberequester.cpp
+    tuberequester.cpp \
+    category.cpp
 
 HEADERS += qtube.h\
         LibQTube_global.h \
@@ -42,4 +43,5 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
 
