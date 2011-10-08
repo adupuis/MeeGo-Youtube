@@ -1,7 +1,7 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
-#include <QDate>
+#include <QDateTime>
 
 #include "user.h"
 #include "category.h"
@@ -13,7 +13,7 @@ private:
 
     QString     m_name;
     QString     m_id;             // Only the string after http://www.youtube.com/watch?v=
-    QDate       m_pubDate;
+    QDateTime   m_pubDate;
     QString     m_description;
     qint32      m_duration;
 
@@ -34,7 +34,7 @@ public:
     User*       getAuthor();
     QString&    getName();
     QString&    getId();
-    QDate&      getPubDate();
+    QDateTime&  getPubDate();
     QString&    getDescription();
     qint32      getDuration();
     qint32      getFavoriteCount();
@@ -48,7 +48,8 @@ public:
     void        setCategory     (Category *category);
     void        setAuthor       (User *author);
     void        setName         (QString &name);
-    void        setPubDate      (QDate &date);
+    void        setPubDate      (QDateTime &date);
+    void        setPubDate      (QString &date);
     void        setDescription  (QString &description);
     void        setDuration     (qint32 duration);
     void        setFavoriteCount(qint32 count);

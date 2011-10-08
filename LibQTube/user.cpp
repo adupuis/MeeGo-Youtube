@@ -8,6 +8,6 @@ QString& User::getName() {
     return m_name;
 }
 
-void retrieve() {
+void User::retrieve() {
     // TODO
 }

@@ -24,6 +24,9 @@ public:
 
     void sendRequest();
 signals:
+    /**
+      * @return: may be null if error.
+      */
     void resultReady(QIODevice *_result);
 
 private:

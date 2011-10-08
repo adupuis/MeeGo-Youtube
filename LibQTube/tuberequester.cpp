@@ -1,6 +1,7 @@
 #include "tuberequester.h"
 #include <QUrl>
 #include <QNetworkRequest>
+#include <QNetworkReply>
 
 const QString TubeRequester::BASE_URL("http://gdata.youtube.com/feeds/api/videos?");
 
@@ -31,9 +32,11 @@ void TubeRequester::setQuery(const QString& _request)
 
 void TubeRequester::_prepareRequest(QNetworkReply* _reply)
 {
-    QIODevice *res = (QIODevice*)_reply;
-    if( _reply )
-        emit resultReady(res);
+    QIODevice *res = 0;
+    if(_reply->error() == QNetworkReply::NoError) {
+        res = (QIODevice*)_reply;
+    }
+    emit resultReady(res);
 }
 
 void TubeRequester::sendRequest()
@@ -44,12 +47,12 @@ void TubeRequester::sendRequest()
         m_request.append(key);
         m_request.append("=");
         m_request.append(m_requestHash.value(key));
+        m_request.append("&");
     }
 
     request.setUrl(QUrl(m_request));
     qDebug() << "req" << m_request;
-    bool b = connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
+    connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(_prepareRequest(QNetworkReply*)));
-    qDebug() << "connect" << b;
     m_networkManager.get(request);
 }
