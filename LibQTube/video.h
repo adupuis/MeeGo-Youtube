@@ -3,6 +3,7 @@
 
 #include <QDate>
 
+#include "user.h"
 #include "category.h"
 
 class Video : public Retrievable {
@@ -14,14 +15,14 @@ private:
     QString     id;             // Only the string after http://www.youtube.com/watch?v=
     QDate       pubDate;
     QString     description;
-    qint32      duration        = 0;
+    qint32      duration;
 
-    qint32      favoriteCount   = 0;
-    qint32      viewCount       = 0;
-    qint32      dislikes        = 0;
-    qint32      likes           = 0;
-    qreal       rating          = 0;
-    qint32      numRating       = 0;
+    qint32      favoriteCount;
+    qint32      viewCount;
+    qint32      dislikes;
+    qint32      likes;
+    qreal       rating;
+    qint32      numRating;
 
 public:
     // Constructor

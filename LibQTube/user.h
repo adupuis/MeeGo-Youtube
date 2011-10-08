@@ -1,11 +1,13 @@
 #ifndef USER_H
 #define USER_H
 
+#include "retrievable.h"
+
 class User : public Retrievable
 {
 public:
     // Constructor
-    User(String &name);
+    User(QString &name);
 
     void retrieve();
 };
