@@ -8,3 +8,7 @@ Category::Category(QString &name) {
 QString& Category::getName() {
     return m_name;
 }
+
+void Category::requestVideos() {
+    // TODO with TubeRequester
+}

@@ -13,6 +13,8 @@ public:
 
     // Getters
     QString&    getName();
+
+    void        requestVideos();
 };
 
 #endif // CATEGORY_H
