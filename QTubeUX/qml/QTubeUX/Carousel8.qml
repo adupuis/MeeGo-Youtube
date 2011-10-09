@@ -15,10 +15,11 @@ Rectangle {
     color: "black"
     PathView {
         id: view
+        x: -38
         focus: true
         width: parent.width
         height: parent.height + y
-        y: -100
+        y: -141
         model: Menu8 {}
 //        delegate: Image {
 //            source: iconSource
@@ -51,7 +52,7 @@ Rectangle {
             thumb3_is_hd: hd3
         }
         path: Ellipse8 {
-            width: view.width
+            width: 2000
             height: view.height
         }
         preferredHighlightBegin: 0
@@ -59,6 +60,14 @@ Rectangle {
         highlightRangeMode: PathView.StrictlyEnforceRange
         Keys.onLeftPressed: decrementCurrentIndex()
         Keys.onRightPressed: incrementCurrentIndex()
+
+        Flickable {
+            id: flickable1
+            x: 46
+            y: 151
+            width: 1346
+            height: 754
+        }
     }
 //    Text {
 //        id: label
