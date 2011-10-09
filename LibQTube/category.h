@@ -3,7 +3,9 @@
 
 #include <QObject>
 
-class Category : public QObject
+#include "requestable.h"
+
+class Category : public Requestable
 {
 private:
     static QList<Category*>   s_predefinedCategories;
@@ -16,9 +18,10 @@ public:
     // Getters
     QString&    getName();
 
-    void        requestVideos();
+    void        request();
 
     static QList<Category*> getPredefinedCategories();
+    static Category*        getPredefinedCategory(QString& name);
 };
 
 #endif // CATEGORY_H

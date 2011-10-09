@@ -18,10 +18,6 @@ Video::Video(QString &id, Category *category, User *author) {
 }
 
 Video::~Video() {
-    if (m_category != NULL) {
-        delete m_category;
-    }
-
     if (m_author != NULL) {
         delete m_author;
     }
@@ -158,4 +154,16 @@ QString Video::getHqThumbnailUrl() {
 
 QString Video::getBrowserUrl() {
     return BASE_BROWSER_URL + m_id;
+}
+
+void Video::request() {
+    // TODO
+}
+
+void Video::requestRelated() {
+    request();
+}
+
+void Video::requestResponses() {
+    // TODO
 }

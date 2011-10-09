@@ -4,7 +4,7 @@
 #include <QNetworkReply>
 #include <QDebug>
 
-const QString TubeRequesterBase::BASE_URL("http://gdata.youtube.com/feeds/api/videos");
+const QString TubeRequesterBase::BASE_URL("http://gdata.youtube.com/feeds/mobile/videos");
 const QString TubeRequesterBase::CAT_PREFIX("{http://gdata.youtube.com/schemas/2007/categories.cat}");
 QList<QString> TubeRequesterBase::CATEGORIES;
 
