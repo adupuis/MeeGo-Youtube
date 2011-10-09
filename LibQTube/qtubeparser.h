@@ -12,6 +12,7 @@ public:
     QList<Video*> parseFeed(QIODevice &);
 private:
     QString getSubElementText(QDomElement pElement, QString pSubElementName);
+    qint32 getIntAttribute(QDomElement pElement, QString pAttributeName);
     Video* parseVideo(QDomElement pElement);
 };
 
