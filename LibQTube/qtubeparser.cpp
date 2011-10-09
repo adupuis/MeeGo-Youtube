@@ -94,8 +94,6 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         uploadedDate = getSubElementText(mediaGroupElem, "uploaded");
         description = getSubElementText(mediaGroupElem, "description");
 
-        // TODO we should have a separate class manage the list of possible
-        // categories, instead of allocating a new Category object for each user.
         QString categoryString = getSubElementText(mediaGroupElem, "category");
         category = Category::getPredefinedCategory(categoryString);
         if(category == NULL)
