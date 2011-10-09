@@ -66,8 +66,9 @@ void TubeRequester::_prepareRequest(QNetworkReply* _reply)
 void TubeRequester::sendRequest()
 {
     QNetworkRequest request;
-    m_request = BASE_URL;
+    bool isFirst = true;
 
+    m_request = BASE_URL;
 
     // categories
     if( m_categories.size() != 0 ) {
@@ -84,6 +85,8 @@ void TubeRequester::sendRequest()
     {// param
         int count = 0;
         const QList<QString> &keys = m_requestHash.keys();
+        if(keys.isEmpty() == false)
+            isFirst = false;
         foreach( QString key, keys ) {
             if(count == 0)
                 m_request.append("?");
@@ -93,6 +96,16 @@ void TubeRequester::sendRequest()
             if(count != keys.length() - 1)
                 m_request.append("&");
             count++;
+        }
+    }
+
+    { // format
+        if(m_isEmbeddable) {
+            if(isFirst)
+                m_request.append("?");
+            else
+                m_request.append("&");
+            m_request.append("format=5");
         }
     }
 
