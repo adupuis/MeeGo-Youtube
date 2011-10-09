@@ -2,7 +2,9 @@
 #define APP_H
 #include <QObject>
 #include <QIODevice>
+#include <QDebug>
 #include <tuberequester.h>
+#include <tuberequesterrelated.h>
 class App : public QObject {
     Q_OBJECT
 public:
@@ -15,6 +17,16 @@ public:
         tr->addCategory(TubeRequester::Animals);
         tr->setFormatEmbeddable();
         tr->sendRequest();
+
+        TubeRequesterRelated* trr = new TubeRequesterRelated(this);
+        connect(tr, SIGNAL(resultReady(QIODevice*)), this, SLOT(print(QIODevice*)));
+        trr->setNumberOfResult(3);
+        trr->setId("42");
+//        tr->setQuery("plop");
+//        tr->addCategory(TubeRequester::Autos);
+//        tr->addCategory(TubeRequester::Animals);
+//        tr->setFormatEmbeddable();
+        trr->sendRequest();
     }
 public slots:
     void print(QIODevice* d) {

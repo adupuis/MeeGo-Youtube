@@ -17,21 +17,25 @@ SOURCES += qtube.cpp \
     qtubeparser.cpp \
     qtube.h \
     LibQTube_global.h \
-    tuberequester.cpp \
     category.cpp \
     user.cpp \
     video.cpp \
-    keyword.cpp
+    keyword.cpp \
+    tuberequesterbase.cpp \
+    tuberequester.cpp \
+    tuberequesterrelated.cpp
 
 HEADERS += qtube.h\
         LibQTube_global.h \
     video.h \
     category.h \
     retrievable.h \
-    tuberequester.h \
     qtubeparser.h \
     user.h \
-    keyword.h
+    keyword.h \
+    tuberequesterbase.h \
+    tuberequester.h \
+    tuberequesterrelated.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -51,7 +55,3 @@ unix:!symbian {
     }
     INSTALLS += target
 }
-
-
-
-
