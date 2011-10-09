@@ -29,6 +29,7 @@ QList<Category*> Category::getPredefinedCategories() {
         s_predefinedCategories.append(new Category(QString("Tech")));
         s_predefinedCategories.append(new Category(QString("Sports")));
         s_predefinedCategories.append(new Category(QString("Travel")));
+        s_predefinedCategories.append(new Category(QString("Games")));
     }
 
     return s_predefinedCategories;

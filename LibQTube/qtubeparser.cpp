@@ -49,6 +49,12 @@ QString QTubeParser::getSubElementText(QDomElement pElement, QString pSubElement
     return text;
 }
 
+qint32 QTubeParser::getIntAttribute(QDomElement pElement, QString pAttributeName) {
+    QString valueString = pElement.attribute(pAttributeName, "0");
+    qint32 value = valueString.toInt();
+    return value;
+}
+
 /**
  * Parse the XML element for a given video and create a Video object for the video.
  */
@@ -88,17 +94,16 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         uploadedDate = getSubElementText(mediaGroupElem, "uploaded");
         description = getSubElementText(mediaGroupElem, "description");
 
-        // TODO we should have a separate class manage the list of possible
-        // categories, instead of allocating a new Category object for each user.
         QString categoryString = getSubElementText(mediaGroupElem, "category");
         category = Category::getPredefinedCategory(categoryString);
+        if(category == NULL)
+            cerr << "Category not predefined: " << categoryString.toAscii().data() << endl;
 
         // Duration of the video. Ex: <yt:duration seconds="211"/>
         QDomNodeList durationElems = mediaGroupElem.elementsByTagName("duration");
         if(!durationElems.isEmpty()) {
             QDomElement durationElem = durationElems.at(0).toElement();
-            QString durationString = durationElem.attribute("seconds");
-            duration = durationString.toInt();
+            duration = getIntAttribute(durationElem, "seconds");
         }
 
         // Keywords.  Example: <media:keywords>chopin, melancholy, cello</media:keywords>
@@ -118,10 +123,8 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
         // Example:
         // <yt:rating numDislikes='100' numLikes='2708'/>
         else if(ratingElem.prefix() == "yt") {
-            QString numLikesString = ratingElem.attribute("numLikes", "0");
-            numLikes = numLikesString.toInt();
-            QString numDislikesString = ratingElem.attribute("numDislikes","0");
-            numDislikes = numDislikesString.toInt();
+            numLikes = getIntAttribute(ratingElem, "numLikes");
+            numDislikes = getIntAttribute(ratingElem, "numDislikes");
         }
     }
 
@@ -130,10 +133,8 @@ Video *QTubeParser::parseVideo(QDomElement pElement) {
     QDomNodeList statisticsElems = pElement.elementsByTagName("statistics");
     if(!statisticsElems.isEmpty()) {
         QDomElement statisticsElem = statisticsElems.at(0).toElement();
-        QString favoriteCountStr = statisticsElem.attribute("favoriteCount");
-        favoriteCount = favoriteCountStr.toInt();
-        QString viewCountStr = statisticsElem.attribute("viewCount");
-        viewCount = viewCountStr.toInt();
+        favoriteCount = getIntAttribute(statisticsElem, "favoriteCount");
+        viewCount = getIntAttribute(statisticsElem, "viewCount");
     }
 
     // Now create the video and set the attributes.
