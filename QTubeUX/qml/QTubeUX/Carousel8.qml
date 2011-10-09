@@ -67,6 +67,7 @@ Rectangle {
             y: 151
             width: 1346
             height: 754
+            boundsBehavior: Flickable.StopAtBounds
         }
     }
 //    Text {
